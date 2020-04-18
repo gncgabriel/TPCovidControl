@@ -1,0 +1,47 @@
+﻿@model CovidView.Models.CovidInfo
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Covid Info @Html.DisplayFor(covid => covid.pais)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Casos_Confirmados" class="control-label"></label>
+                <input asp-for="Casos_Confirmados" class="form-control" />
+                <span asp-validation-for="Casos_Confirmados" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mortes" class="control-label"></label>
+                <input asp-for="Mortes" class="form-control" />
+                <span asp-validation-for="Mortes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recuperados" class="control-label"></label>
+                <input asp-for="Recuperados" class="form-control" />
+                <span asp-validation-for="Recuperados" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="pais" class="form-control" />
+
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Paises" asp-action="Details" asp-route-id="@Model.pais">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

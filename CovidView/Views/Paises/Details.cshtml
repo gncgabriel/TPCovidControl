@@ -1,0 +1,43 @@
+﻿@model CovidView.Models.Pais
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Covid-19</h4>
+
+    <table class="table">
+        <thead></thead>
+        <tbody>
+            <tr>
+                <td>País</td>
+                <td>@Model.Covid_Info.pais</td>
+            </tr>
+            <tr>
+                <td>Casos Confirmados</td>
+                <td>@Model.Covid_Info.Casos_Confirmados</td>
+            </tr>
+            <tr>
+                <td>Mortes</td>
+                <td>@Model.Covid_Info.Mortes</td>
+            </tr>
+            <tr>
+                <td>Recuperados</td>
+                <td>@Model.Covid_Info.Recuperados</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <a asp-action="Edit" asp-controller="CovidInfo" asp-route-id="@Model.Covid_Info.id">Alterar dados</a> |
+        </div>
+    }
+    <a asp-action="Index">Voltar</a>
+</div>
