@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CovidView.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200418181040_inital")]
+    [Migration("20200510183933_inital")]
     partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

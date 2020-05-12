@@ -12,6 +12,7 @@ namespace CovidView.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            
         }
 
         public DbSet<Pais> Pais { get; set; }

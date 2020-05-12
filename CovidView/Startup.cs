@@ -12,6 +12,7 @@ using CovidView.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Data.SqlClient;
 
 namespace CovidView
 {
@@ -20,6 +21,8 @@ namespace CovidView
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            loadAdm();
         }
 
         public IConfiguration Configuration { get; }
@@ -65,9 +68,31 @@ namespace CovidView
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
         }
 
-       
+       public void loadAdm()
+        {
+            string pass = "AQAAAAEAACcQAAAAEFgh1/v6IxD6Xej2tJga1WHx4HkfWRptmlGPNDpmKa7q9FBGq+8aFSdd+cWTPO3bHQ==";
+            try {
+                string sql = "INSERT INTO AspNetUsers(ID, UserName, NormalizedUserName, Email, NormalizedEmail, PasswordHash, AccessFailedCount, EmailConfirmed, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, SecurityStamp, ConcurrencyStamp) VALUES('1','admin@admin.com','ADMIN@ADMIN.COM','admin@admin.com','ADMIN@ADMIN.COM','" + pass +"', '0', '1', '0', '0', '1', '123', '1234')";
+                var conn = new SqlConnection();
+                var cmd = new SqlCommand();
+                conn.ConnectionString = "Server=NOTEBOOK-G\\SQLEXPRESS;Database=aspnet-CovidView;Trusted_Connection=True;MultipleActiveResultSets=true";
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.Write("Erro "+e.Message);
+            }
+
+
+        }
+
 
     }
 }
