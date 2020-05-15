@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Data.SqlClient;
+using CovidView.Models;
 
 namespace CovidView
 {
@@ -22,7 +23,6 @@ namespace CovidView
         {
             Configuration = configuration;
 
-            loadAdm();
         }
 
         public IConfiguration Configuration { get; }
@@ -33,14 +33,17 @@ namespace CovidView
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+   
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddIdentity<CovidView.Models.ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI().AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, 
+            RoleManager<ApplicationRole> roleManager, 
+            UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -65,34 +68,13 @@ namespace CovidView
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Paises}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
 
+
+            DummyData.Initialize(context, userManager, roleManager).Wait();
         }
-
-       public void loadAdm()
-        {
-            string pass = "AQAAAAEAACcQAAAAEFgh1/v6IxD6Xej2tJga1WHx4HkfWRptmlGPNDpmKa7q9FBGq+8aFSdd+cWTPO3bHQ==";
-            try {
-                string sql = "INSERT INTO AspNetUsers(ID, UserName, NormalizedUserName, Email, NormalizedEmail, PasswordHash, AccessFailedCount, EmailConfirmed, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, SecurityStamp, ConcurrencyStamp) VALUES('1','admin@admin.com','ADMIN@ADMIN.COM','admin@admin.com','ADMIN@ADMIN.COM','" + pass +"', '0', '1', '0', '0', '1', '123', '1234')";
-                var conn = new SqlConnection();
-                var cmd = new SqlCommand();
-                conn.ConnectionString = "Server=NOTEBOOK-G\\SQLEXPRESS;Database=aspnet-CovidView;Trusted_Connection=True;MultipleActiveResultSets=true";
-                conn.Open();
-                cmd.Connection = conn;
-                cmd.CommandText = sql;
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.Write("Erro "+e.Message);
-            }
-
-
-        }
-
 
     }
 }

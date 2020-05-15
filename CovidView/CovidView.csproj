@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-CovidView-7E60A911-8B6B-4983-A030-6EA238514968</UserSecretsId>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +16,8 @@
     <Compile Remove="Data\Migrations\20200418175504_inital.Designer.cs" />
     <Compile Remove="Data\Migrations\20200418181040_inital.cs" />
     <Compile Remove="Data\Migrations\20200418181040_inital.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200515213356_intial.cs" />
+    <Compile Remove="Data\Migrations\20200515213356_intial.Designer.cs" />
   </ItemGroup>
 
 
@@ -24,7 +28,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
   </ItemGroup>
 
 </Project>
